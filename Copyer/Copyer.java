@@ -71,8 +71,6 @@ public class Copy {
 	            }else {
 	            	
 	            	try {
-						
-						
 						File af=new File(rootFile+str);
 						File bf=new File(distin+str);
 						FileInputStream is = null;
