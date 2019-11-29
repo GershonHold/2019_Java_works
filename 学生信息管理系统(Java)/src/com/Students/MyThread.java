@@ -1,4 +1,4 @@
-package com.Students ;
+package com.student ;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
