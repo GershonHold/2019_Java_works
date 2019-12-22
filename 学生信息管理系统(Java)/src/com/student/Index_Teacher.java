@@ -2,6 +2,7 @@ package com.student;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,7 +18,7 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Vector;
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +37,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 	private JPanel contentPane;
 	private JTable table;
 	private Vector Data;
+	private Vector Data_search;
 	private Vector ColName;
 	private JTabbedPane tabbedPane;
 	private JPanel pAdd;
@@ -54,12 +56,13 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 	private JButton btnDel;
 	private JPanel pUp;
 	private DefaultTableModel dtm;
+	private DefaultTableModel dtm2;
 	private JButton btnUp;
 	private JLabel lblSex;
 	private JLabel lblScore;
 	private String command;
 	private JLabel label;
-	private JLabel label_1;
+	private JLabel label_help;
 	private FileReader fr;
 	private JTextField getDelID;
 	private JTextField Upt_ID;
@@ -90,19 +93,35 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 	private JPanel p_add_adminer;
 	private JTextField Add_account;
 	private JTextField Add_order;
+	private JLabel label_13;
+	private JLabel label_EXIT;
+	private JPanel panel;
+	private JScrollPane scrollPane_SEARCH_RESULT;
+	private JTable table_1;
+	private JTextField SEARCH_ID;
+	private JButton btnSearch;
+	private JLabel label_1;
+	private JLabel label_14;
+	private JLabel label_15;
+	private JLabel label_16;
+	private JLabel label_17;
+	private JLabel label_18;
+	private JLabel label_19;
+	private JLabel label_20;
+	private JLabel label_21;
+	private JLabel label_22;
+	private JLabel label_23;
+	private JLabel label_24;
+	private JLabel label_25;
+	private JLabel label_26;
+	private JLabel label_27;
+	private JLabel label_28;
+	private JLabel label_29;
+	private JLabel label_30;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-		Index_Teacher frame = new Index_Teacher(ID);
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Create the frame.
-	 */
+//	/**
+//	 * Create the frame.
+//	 */
 	public Index_Teacher(String ID) {
 
 		this.ID = ID;
@@ -112,8 +131,10 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		setLocation(442, 236);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setOpaque(false);
 		setContentPane(contentPane);
-
+		this.setResizable(false);
+		setBack();
 		Data = new Vector();
 
 		ColName = new Vector();
@@ -126,23 +147,26 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		ColName.add("C");
 		ColName.add("离散数学");
 		ColName.add("数据结构");
+
 		ShowData();
 
-		dtm = new DefaultTableModel(Data, ColName);
-		dtm.setDataVector(Data, ColName);
 		contentPane.setLayout(null);
 
 		table = new JTable(dtm);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(0, 187, 704, 209);
+		scrollPane.setBackground(SystemColor.activeCaption);
 		contentPane.add(scrollPane);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 45, 704, 142);
+		tabbedPane.setBounds(0, 45, 704, 351);
+		tabbedPane.setOpaque(false);
 		contentPane.add(tabbedPane);
 
 		pAdd = new JPanel();
+		pAdd.setForeground(Color.BLACK);
 		tabbedPane.addTab("录入学生信息", pAdd);
+		pAdd.setBackground(SystemColor.activeCaption);
 		pAdd.setLayout(null);
 
 		lAddName = new JLabel("Name");
@@ -233,6 +257,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		pAdd.add(label_5);
 
 		pDel = new JPanel();
+		pDel.setBackground(SystemColor.activeCaption);
 		tabbedPane.addTab("删除学生信息", null, pDel, null);
 		pDel.setLayout(null);
 
@@ -252,6 +277,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		btnDel.addActionListener(this);
 
 		pUp = new JPanel();
+		pUp.setBackground(SystemColor.activeCaption);
 		tabbedPane.addTab("更新分数信息", null, pUp, null);
 
 		btnUp = new JButton("Update");
@@ -319,6 +345,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		Upt_5.setColumns(10);
 
 		p_pwd_Up = new JPanel();
+		p_pwd_Up.setBackground(SystemColor.activeCaption);
 		p_pwd_Up.setLayout(null);
 		tabbedPane.addTab("修改管理员口令", null, p_pwd_Up, null);
 
@@ -342,6 +369,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		p_pwd_Up.add(btnChange);
 
 		p_add_adminer = new JPanel();
+		p_add_adminer.setBackground(SystemColor.activeCaption);
 		p_add_adminer.setLayout(null);
 		tabbedPane.addTab("添加管理员账号", null, p_add_adminer, null);
 
@@ -367,25 +395,140 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		p_add_adminer.add(Add_order);
 		Add_order.setColumns(10);
 
-		label = new JLabel("\u5B66\u751F\u7BA1\u7406\u7CFB\u7EDF\u6559\u5E08\u7248");
-		label.setFont(new Font("Adobe ���� Std R", Font.PLAIN, 32));
-		label.setBounds(218, 13, 319, 34);
-		contentPane.add(label);
+		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(406, 46, 63, 27);
+		btnOk.addActionListener(this);
+		p_add_adminer.add(btnOk);
 
-		label_1 = new JLabel("\u5E2E\u52A9\uFF1F");
-		label_1.setBounds(634, 14, 56, 18);
-		contentPane.add(label_1);
+		panel = new JPanel();
+		panel.setBackground(SystemColor.activeCaption);
+		panel.setLayout(null);
+		tabbedPane.addTab("查找学生信息", null, panel, null);
+
+		scrollPane_SEARCH_RESULT = new JScrollPane();
+		scrollPane_SEARCH_RESULT.setBounds(0, 319, 699, -203);
+		panel.add(scrollPane_SEARCH_RESULT);
+
+		table_1 = new JTable(dtm2);
+		table_1.setBounds(0, 0, 1, 1);
+		scrollPane_SEARCH_RESULT.add(table_1);
+
+		JLabel lblid = new JLabel("请输入需要查找学生的ID");
+		lblid.setBounds(14, 13, 174, 18);
+		panel.add(lblid);
+
+		SEARCH_ID = new JTextField();
+		SEARCH_ID.setBounds(202, 10, 86, 24);
+		panel.add(SEARCH_ID);
+		SEARCH_ID.setColumns(10);
+
+		btnSearch = new JButton("Search");
+		btnSearch.setBounds(313, 9, 86, 27);
+		btnSearch.addActionListener(this);
+		panel.add(btnSearch);
+		
+		label_1 = new JLabel("ID");
+		label_1.setBounds(14, 44, 40, 18);
+		panel.add(label_1);
+		
+		label_14 = new JLabel("name");
+		label_14.setBounds(14, 85, 40, 18);
+		panel.add(label_14);
+		
+		label_15 = new JLabel("age");
+		label_15.setBounds(123, 44, 40, 18);
+		panel.add(label_15);
+		
+		label_16 = new JLabel("sex");
+		label_16.setBounds(123, 85, 40, 18);
+		panel.add(label_16);
+		
+		label_17 = new JLabel("java");
+		label_17.setBounds(228, 44, 40, 18);
+		panel.add(label_17);
+		
+		label_18 = new JLabel("C++");
+		label_18.setBounds(228, 85, 40, 18);
+		panel.add(label_18);
+		
+		label_19 = new JLabel("C");
+		label_19.setBounds(323, 44, 40, 18);
+		panel.add(label_19);
+		
+		label_20 = new JLabel("离散数学");
+		label_20.setBounds(315, 85, 71, 18);
+		panel.add(label_20);
+		
+		label_21 = new JLabel("数据结构");
+		label_21.setBounds(448, 44, 71, 18);
+		panel.add(label_21);
+		
+		label_22 = new JLabel("");
+		label_22.setBounds(38, 44, 71, 18);
+		panel.add(label_22);
+		
+		label_23 = new JLabel("");
+		label_23.setBounds(59, 85, 50, 18);
+		panel.add(label_23);
+		
+		label_24 = new JLabel("");
+		label_24.setBounds(164, 44, 50, 18);
+		panel.add(label_24);
+		
+		label_25 = new JLabel("");
+		label_25.setBounds(164, 85, 50, 18);
+		panel.add(label_25);
+		
+		label_26 = new JLabel("");
+		label_26.setBounds(259, 44, 50, 18);
+		panel.add(label_26);
+		
+		label_27 = new JLabel("");
+		label_27.setBounds(259, 85, 50, 18);
+		panel.add(label_27);
+		
+		label_28 = new JLabel("");
+		label_28.setBounds(377, 44, 50, 18);
+		panel.add(label_28);
+		
+		label_29 = new JLabel("");
+		label_29.setBounds(400, 85, 50, 18);
+		panel.add(label_29);
+		
+		label_30 = new JLabel("");
+		label_30.setBounds(533, 44, 50, 18);
+		panel.add(label_30);
+
+		label_help = new JLabel("\u5E2E\u52A9\uFF1F");
+		label_help.setBounds(595, 13, 45, 18);
+		contentPane.add(label_help);
 
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(67, 0, 126, 18);
 		contentPane.add(label_2);
+		label_help.addMouseListener(this);
+
+		MyThread mt2 = new MyThread(label_2);
+
+		label = new JLabel("\u5B66\u751F\u7BA1\u7406\u7CFB\u7EDF\u6559\u5E08\u7248");
+		label.setForeground(new Color(165, 42, 42));
+		label.setFont(new Font("Adobe ���� Std R", Font.PLAIN, 32));
+		label.setBounds(218, 13, 319, 34);
+		contentPane.add(label);
 
 		JLabel label_3 = new JLabel("系统时间");
 		label_3.setBounds(0, 0, 66, 18);
 		contentPane.add(label_3);
-		label_1.addMouseListener(this);
 
-		MyThread mt2 = new MyThread(label_2);
+		label_13 = new JLabel("|");
+		label_13.setBounds(633, 6, 8, 32);
+		contentPane.add(label_13);
+
+		label_EXIT = new JLabel("退出登陆");
+		label_EXIT.setBounds(644, 13, 72, 18);
+		contentPane.add(label_EXIT);
+		label_EXIT.addMouseListener(this);
+
 		Thread t = new Thread(mt2);
 		t.start();
 	}
@@ -461,6 +604,7 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 		String delID = getDelID.getText();
 		Object n = null, obj = null;
 		Vector v;
+
 		if (command.equals("Delete")) {
 			if (!(delID.equals(""))) {
 
@@ -471,7 +615,6 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 
 					String rowDataName = String.valueOf(n);
 					if (delID.equals(rowDataName)) {
-						System.out.println(delID);
 						Data.remove(obj);
 						dtm.setDataVector(Data, ColName);
 
@@ -621,27 +764,67 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 				e2.getStackTrace();
 			}
 		}
+
+		if (command.equals("OK")) {
+			if (!Add_account.getText().equals("") && !Add_order.getText().equals("")) {
+				OutOrder(Add_account.getText() + " " + Add_order.getText() + "\n");
+				JOptionPane.showMessageDialog(null, "添加成功！");
+				Add_account.setText("");
+				Add_order.setText("");
+			} else {
+				JOptionPane.showMessageDialog(null, "添加账号信息不完整！");
+			}
+		}
+		if (command.equals("Search")) {
+			String Input_search_ID = SEARCH_ID.getText();
+			Search_Data(Input_search_ID);
+			SEARCH_ID.setText("");
+		}
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		JOptionPane.showMessageDialog(null, "1.本地学生数据保存在目录'C://MIS//lib'下", "提示", JOptionPane.INFORMATION_MESSAGE);
-	}
+	public void mouseEntered(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
 
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		label_1.setForeground(Color.blue);
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		label_1.setForeground(Color.black);
+		if (command1.equals(label_help.toString())) {
+			label_help.setForeground(Color.blue);
+		}
+		if (command1.equals(label_EXIT.toString())) {
+			label_EXIT.setForeground(Color.blue);
+		}
 
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mouseExited(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
+		if (command1.equals(label_help.toString())) {
+			label_help.setForeground(Color.black);
+		}
+		if (command1.equals(label_EXIT.toString())) {
+			label_EXIT.setForeground(Color.black);
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
+		if (command1.equals(label_EXIT.toString())) {
+			int if_EXIT = JOptionPane.showConfirmDialog(null, "要退出当前登陆账号吗？");
+			if (if_EXIT == 0) {
+				this.setVisible(false);
+				Login relogin = new Login();
+				relogin.get_identify_code();
+				relogin.setVisible(true);
+			}
+		}
+		if (command1.equals(label_help.toString())) {
+			JOptionPane.showMessageDialog(null, "1.本地学生数据保存在目录C://MIS//lib下", "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent me) {
 		// TODO Auto-generated method stub
 
 	}
@@ -713,12 +896,40 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		dtm = new DefaultTableModel(Data, ColName);
+		dtm.setDataVector(Data, ColName);
 	}
 
 	public void Outputpassword(String str) {
 		RandomAccessFile raf = null;
 		try {
 			raf = new RandomAccessFile(new File("C://MIS//data//password.txt"), "rw");
+			try {
+				raf.seek(raf.length());
+				raf.write((str).getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (raf == null) {
+				try {
+					raf.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void OutOrder(String str) {
+		RandomAccessFile raf = null;
+		try {
+			raf = new RandomAccessFile(new File("C://MIS//data//order.txt"), "rw");
 			try {
 				raf.seek(raf.length());
 				raf.write((str).getBytes());
@@ -760,14 +971,68 @@ public class Index_Teacher extends JFrame implements ActionListener, MouseListen
 			FileWriter bw = null;
 			bw = new FileWriter(file);
 			for (int j = 0; j < arr.size(); j++) {
-				if (!delID.equals((arr.get(j).substring(0, 9))))
+				String[] str1 = (arr.get(j)).split("\\s+");
+				if (!delID.equals(str1[0]))
 					bw.write(arr.get(j) + "\n");
 			}
-
-//		String[] str1 = (arr.get(2)).split("\\s+");
 			bw.close();
 		} catch (Exception e2) {
 			e2.getStackTrace();
 		}
 	}
+
+	public void Search_Data(String ID) {
+
+		File bf = new File("C://MIS//lib//Student.txt");
+		FileOutputStream os = null;
+		if (!bf.exists()) {
+			try {
+				bf.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(new FileInputStream("C://MIS//lib//Student.txt")));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String data = null;
+		try {
+			while ((data = br.readLine()) != null) {
+				String[] str = data.split("\\s+");
+				if (str[0].equals(ID)) {
+					label_22.setText(str[0]);
+					label_23.setText(str[1]);
+					label_24.setText(str[2]);
+					label_25.setText(str[3]);
+					label_26.setText(str[4]);
+					label_27.setText(str[5]);
+					label_28.setText(str[6]);
+					label_29.setText(str[7]);
+					label_30.setText(str[8]);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		dtm = new DefaultTableModel(Data, ColName);
+		dtm.setDataVector(Data, ColName);
+
+	}
+	
+	//设置背景
+    public void setBack() {
+        ((JPanel) this.getContentPane()).setOpaque(false);
+        ImageIcon img = new ImageIcon(Login.class.getResource("/flower.jpg"));
+        JLabel background = new JLabel(img);
+        this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+        background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
+    }
+    
 }

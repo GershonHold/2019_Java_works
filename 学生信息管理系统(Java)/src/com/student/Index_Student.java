@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.student;
 
 import java.awt.Color;
@@ -68,22 +65,7 @@ public class Index_Student extends JFrame implements ActionListener, MouseListen
 	private JLabel score_4;
 	private JLabel score_5;
 	private JLabel WELCOME;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Index_Student frame = new Index_Student(ID);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JLabel label_EXIT;
 
 	/**
 	 * Create the frame.
@@ -98,9 +80,8 @@ public class Index_Student extends JFrame implements ActionListener, MouseListen
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
-//		Data = new Vector();
-//		ColName = new Vector();
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 
 		dtm = new DefaultTableModel(Data, ColName);
 		dtm.setDataVector(Data, ColName);
@@ -225,12 +206,13 @@ public class Index_Student extends JFrame implements ActionListener, MouseListen
 		panel_1.add(button);
 
 		JLabel label = new JLabel("\u5B66\u751F\u7BA1\u7406\u7CFB\u7EDF\u5B66\u751F\u7248");
+		label.setForeground(Color.BLUE);
 		label.setFont(new Font("Dialog", Font.PLAIN, 32));
 		label.setBounds(202, 13, 315, 34);
 		contentPane.add(label);
 
 		label_help = new JLabel("\u5E2E\u52A9\uFF1F");
-		label_help.setBounds(634, 14, 56, 18);
+		label_help.setBounds(594, 13, 45, 18);
 		contentPane.add(label_help);
 
 		label_1 = new JLabel("\u7CFB\u7EDF\u65F6\u95F4");
@@ -252,30 +234,64 @@ public class Index_Student extends JFrame implements ActionListener, MouseListen
 		WELCOME.setBounds(14, 47, 147, 18);
 		contentPane.add(WELCOME);
 
+		JLabel label_11 = new JLabel("|");
+		label_11.setBounds(639, 13, 8, 18);
+		contentPane.add(label_11);
+
+		label_EXIT = new JLabel("退出登陆");
+		label_EXIT.setBounds(644, 13, 60, 18);
+		contentPane.add(label_EXIT);
+		label_EXIT.addMouseListener(this);
+
 		Thread t = new Thread(mt);
 		t.start();
 		showData(ID);
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		JOptionPane.showMessageDialog(null, "1.本地学生数据保存在目录C://MIS//lib下", "提示", JOptionPane.INFORMATION_MESSAGE);
+	public void mouseClicked(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
+		if (command1.equals(label_EXIT.toString())) {
+			int if_EXIT = JOptionPane.showConfirmDialog(null, "要退出当前登陆账号吗？");
+			if (if_EXIT == 0) {
+				this.setVisible(false);
+				Login relogin = new Login();
+				relogin.setVisible(true);
+				relogin.get_identify_code();
+				relogin.setVisible(true);
+			}
+		}
+		if (command1.equals(label_help.toString())) {
+			JOptionPane.showMessageDialog(null, "1.本地学生数据保存在目录C://MIS//lib下", "提示", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		label_help.setForeground(Color.blue);
+	public void mouseEntered(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
+
+		if (command1.equals(label_help.toString())) {
+			label_help.setForeground(Color.blue);
+		}
+		if (command1.equals(label_EXIT.toString())) {
+			label_EXIT.setForeground(Color.blue);
+		}
 
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		label_help.setForeground(Color.black);
-
+	public void mouseExited(MouseEvent me) {
+		String command1 = (me.getComponent()).toString();
+		if (command1.equals(label_help.toString())) {
+			label_help.setForeground(Color.black);
+		}
+		if (command1.equals(label_EXIT.toString())) {
+			label_EXIT.setForeground(Color.black);
+		}
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent me) {
 		// TODO Auto-generated method stub
 
 	}
@@ -407,7 +423,6 @@ public class Index_Student extends JFrame implements ActionListener, MouseListen
 
 				Vector row = new Vector();
 				for (String s : str) {
-//				row.add(s);
 					System.out.println(s);
 				}
 			}

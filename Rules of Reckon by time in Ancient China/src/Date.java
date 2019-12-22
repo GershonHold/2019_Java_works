@@ -20,19 +20,6 @@ public class Date extends JFrame {
         storage.setForeground(Color.white);
         add(storage);
 
-        ((JPanel) this.getContentPane()).setOpaque(false);
-        ImageIcon img = new ImageIcon("/Users/hgs/Pictures/menghuichangan.jpg"); //添加图片
-        JLabel background = new JLabel(img);
-        this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
-        background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
-
-        Container c = getContentPane(); //获取JFrame面板
-        JPanel jp = new JPanel(); //创建个JPanel
-        jp.setOpaque(false); //把JPanel设置为透明 这样就不会遮住后面的背景 这样你就能在JPanel随意加组件了
-        c.add(jp);
-
-        setSize(500, 500);
-        setVisible(true);
     }
 
     public int GetNum() {

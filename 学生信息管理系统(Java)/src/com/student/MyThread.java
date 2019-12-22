@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 public class MyThread extends Thread{
 	
 	private JLabel lblNewLabel;
-//	private String sdf;
 
 	public MyThread(JLabel lblNewLabel) {
 		this.lblNewLabel=lblNewLabel;
